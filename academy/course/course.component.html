@@ -1,0 +1,218 @@
+<div id="academy-course" class="page-layout simple left-sidebar inner-scroll">
+
+        <!-- SIDEBAR -->
+        <fuse-sidebar class="sidebar" name="academy-course-left-sidebar-1" position="left" lockedOpen="gt-md">
+    
+            <!-- SIDEBAR CONTENT -->
+            <div class="content" fusePerfectScrollbar>
+    
+                <div class="steps">
+    
+                    <div class="step"
+                         *ngFor="let step of course.steps; let i = index; let last = last; let first = first"
+                         [ngClass]="{'current': currentStep === i, 'completed': currentStep > i, 'last': last, 'first': first}">
+                        <div class="index">
+                            <span>{{i + 1}}</span>
+                        </div>
+                        <div class="title">{{step.title}}</div>
+                    </div>
+    
+                </div>
+    
+            </div>
+            <!-- / SIDEBAR CONTENT -->
+    
+        </fuse-sidebar>
+        <!-- / SIDEBAR -->
+    
+        <!-- CENTER -->
+        <div class="center">
+    
+            <!-- HEADER -->
+            <div class="header mat-accent-bg p-24" fxLayout="row" fxLayoutAlign="start center">
+    
+                <button mat-icon-button class="sidebar-toggle mr-16" fxHide.gt-md
+                        (click)="toggleSidebar('academy-course-left-sidebar-1')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+    
+                <!-- <button mat-icon-button class="mr-16" [routerLink]="'/apps/academy/courses'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button> -->
+    
+                <div>
+                    <h2>{{course.title}}</h2>
+                </div>
+    
+            </div>
+            <!-- / HEADER -->
+    
+        <!-- CONTENT -->
+
+            <div id="course-content" class="content">
+            
+
+                <ng-container *ngFor="let step of course.steps; let i = index;">
+                        <!-- Video -->
+                        <span *ngIf="step.contentType == 'video'">
+                            <div class="course-step" usePerfectScrollbar *ngIf="currentStep === i" [@slideIn]="animationDirection">
+                                
+                                <div id="course-step-content" class="course-step-content">
+                                    <div class="video-container">
+                                        <div class="iframe-container iframe-16by9">
+                                            <iframe [src]="step.video | safe: 'resourceUrl'" class="resp-iframe" controls></iframe>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    {{step.content}}
+                                </div>
+                                <div class="step-navigation">
+                
+                                    <!-- <button mat-fab class="previous mat-accent white-fg"
+                                            (click)="gotoPreviousStep(value)"
+                                            [disabled]="currentStep === 0"
+                                            [fxHide]="currentStep === 0">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </button> -->
+                
+                                    <button mat-fab class="next mat-accent white-fg"
+                                            (click)="gotoNextStep()"
+                                            [disabled]="currentStep === course.totalSteps - 1 || buttonDisabled "
+                                            [fxHide]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </button>
+                
+                                    <button mat-fab class="done mat-green-600-bg"
+                                            (click)="endLesson()"
+                                            [disabled]="currentStep !== course.totalSteps - 1 || buttonDisabled"
+                                            [fxShow]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>check</mat-icon>
+                                    </button>
+                
+                                </div>
+                            </div>
+                        </span>
+                        <!-- /Video -->
+                        <!-- Article -->
+                        <span *ngIf="step.contentType == 'article'">
+                            <div class="course-step" fusePerfectScrollbar *ngIf="currentStep === i" [@slideIn]="animationDirection">
+                                
+                                <div id="course-step-content" class="course-step-content">
+                                    <!-- Content  -->
+                                </div>
+                                <div class="step-navigation">
+                
+                                    <!-- <button mat-fab class="previous mat-accent white-fg"
+                                            (click)="gotoPreviousStep(value)"
+                                            [disabled]="currentStep === 0"
+                                            [fxHide]="currentStep === 0">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </button> -->
+                
+                                    <button mat-fab class="next mat-accent white-fg"
+                                            (click)="gotoNextStep()"
+                                            [disabled]="currentStep === course.totalSteps - 1 || buttonDisabled "
+                                            [fxHide]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </button>
+                
+                                    <button mat-fab class="done mat-green-600-bg"
+                                            (click)="endLesson()"
+                                            [disabled]="currentStep !== course.totalSteps - 1 || buttonDisabled"
+                                            [fxShow]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>check</mat-icon>
+                                    </button>
+                
+                                </div>
+                            </div>
+                        </span>
+                        <!-- /Article -->
+                        <!-- Checkbox Questions -->
+                        <span *ngIf="step.contentType == 'checkbox'">
+                            <div class="course-step" fusePerfectScrollbar *ngIf="currentStep === i" [@slideIn]="animationDirection">
+                                <div id="course-step-content" class="course-step-content">
+                                    <h2 [innerHTML]="step.question | safe: 'html'"></h2>
+                                    <span *ngFor="let q of step.answers">
+                                        <mat-checkbox class="checkbox-answer" (checked)=q.question_choice_text (change)="onCheckboxSelection(step, q.question_choice_text, $event)"><span [innerHTML]="q.question_choice_text | safe: 'html'"></span></mat-checkbox><br />
+                                    </span>
+                                    <br>
+                                    
+                                </div>
+                                <div class="step-navigation">
+                
+                                    <!-- NOT USING BACK BUTTON -->
+                                    <!-- <button mat-fab class="previous mat-accent white-fg"
+                                            (click)="gotoPreviousStep(value)"
+                                            [disabled]="currentStep === 0"
+                                            [fxHide]="currentStep === 0">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </button> -->
+                
+                                    <button mat-fab class="next mat-accent white-fg"
+                                            (click)="gotoNextStep()"
+                                            [disabled]="currentStep === course.totalSteps - 1 || buttonDisabled "
+                                            [fxHide]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </button>
+                
+                                    <button mat-fab class="done mat-green-600-bg"
+                                            (click)="endLesson()"
+                                            [disabled]="currentStep !== course.totalSteps - 1 || buttonDisabled"
+                                            [fxShow]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>check</mat-icon>
+                                    </button>
+                
+                                </div>
+                            </div>
+                        </span>
+                        <!-- /Checkbox Questions -->
+                        <!-- Radio Questions -->
+                        <span *ngIf="step.contentType == 'radiobutton'">
+                            <div class="course-step" fusePerfectScrollbar *ngIf="currentStep === i" [@slideIn]="animationDirection">
+                                <div id="course-step-content" class="course-step-content">
+                                    <h2 [innerHTML]="step.question | safe: 'html'"></h2>                                    
+                                    <mat-radio-group class="radio-answer-group" [(ngModel)]="selectedChoice">
+                                        <span *ngFor="let q of step.answers">
+                                            <mat-radio-button class="radio-answer" [value]="q.question_choice_text" (change)="onChoiceSelection(step)"><span [innerHTML]="q.question_choice_text | safe: 'html'"></span></mat-radio-button><br />
+                                        </span>
+                                        <!-- <mat-radio-button class="radio-answer" *ngFor="let q of step.answers" [value]="q.question_chioce_number"><span>{{q.question_choice_text}}<br></span></mat-radio-button> -->
+                                    </mat-radio-group>
+                                </div>
+                                <div class="step-navigation">
+                
+                                    <!-- NOT USING BACK BUTTON -->
+                                    <!-- <button mat-fab class="previous mat-accent white-fg"
+                                            (click)="gotoPreviousStep(value)"
+                                            [disabled]="currentStep === 0"
+                                            [fxHide]="currentStep === 0">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </button> -->
+                
+                                    <button mat-fab class="next mat-accent white-fg"
+                                            (click)="gotoNextStep()"
+                                            [disabled]="currentStep === course.totalSteps - 1 || buttonDisabled "
+                                            [fxHide]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </button>
+                
+                                    <button mat-fab class="done mat-green-600-bg"
+                                            (click)="endLesson()"
+                                            [disabled]="currentStep !== course.totalSteps - 1 || buttonDisabled"
+                                            [fxShow]="currentStep === course.totalSteps - 1">
+                                        <mat-icon>check</mat-icon>
+                                    </button>
+                
+                                </div>
+                            </div>
+                        </span>                            
+                        <!-- /Radio Questions -->
+                        
+                </ng-container>
+                <!-- / CONTENT -->
+                
+            </div>
+    
+        </div>
+        <!-- / CENTER -->
+    
+    </div>

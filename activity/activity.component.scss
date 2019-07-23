@@ -1,0 +1,154 @@
+@import "src/@fuse/scss/fuse";
+
+.linear-gradient-bg {
+    background: linear-gradient(to right, #0097a7 0%, #424242 100%) !important;
+}
+
+.header {
+    position: relative;
+    flex: 1 0 auto;
+    height: 175px;
+    max-height: 175px;
+    background: #1A237E;
+    background: linear-gradient(to right, #0097a7 0%, rgb(66, 66, 66) 100%);
+    text-align: center;
+
+    @include media-breakpoint('xs') {
+        height: 240px;
+        padding: 16px;
+    }
+
+    .hero-text {
+
+        .hero-icon {
+            position: absolute;
+            top: -64px;
+            left: 0px;
+            opacity: 0.04;
+            font-size: 512px !important;
+            width: 512px !important;
+            height: 512px !important;
+        }
+
+        h1 {
+            color: white;
+            font-size: 40px;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 16px;
+
+            @include media-breakpoint-down('xs') {
+                font-size: 24px;
+            }
+        }
+
+        h2 {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 25px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 0.03em;
+            margin: 0;
+
+            @include media-breakpoint-down('xs') {
+                font-size: 20px;
+            }
+        }
+
+
+        h3 {
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 480px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 0.03em;
+            margin: 0;
+            padding-bottom: 25px;
+
+            @include media-breakpoint-down('xs') {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+mat-cell,
+mat-header {
+    width: 30%;
+}
+
+.cdk-column-trash {
+    max-width: 10%!important;
+}
+
+.mat-table {
+    overflow: auto;
+    // max-height: 500px; TODO: add this after pagination implemented
+}
+
+.element-row {
+    position: relative;
+}
+
+.element-row:nth-child(odd) {
+    display: none!important;
+}
+
+.element-row:not(.expanded) {
+    cursor: pointer;
+}
+
+.element-row:not(.expanded):hover {
+    background: #f5f5f5;
+}
+
+.element-row.expanded {
+    border-bottom-color: transparent;
+    
+}
+
+mat-grid-list {
+    width: 100%
+}
+
+.bot-right-fab {
+    right: 3em;
+    bottom: 1em;
+    position: fixed;
+    z-index: 100
+}
+
+.spinner-container {
+    left: 50%;
+    margin-left: -4em;
+    font-size: 10px;
+}
+.spinner-container, .spinner-container:after {
+    border-radius: 50%;
+    width: 8em;
+    height: 8em;
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -4.05em;
+    z-index:9999;
+}
+
+
+.history-table {
+    overflow: auto;
+    width: 100%;
+}

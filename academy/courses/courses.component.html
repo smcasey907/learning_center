@@ -1,0 +1,211 @@
+<div id="academy-courses" class="page-layout simple">
+
+    <!-- HEADER -->
+    <div class="header mat-cyan-700-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+        <div class="hero-text text-centered">
+            <mat-icon class="hero-icon">school</mat-icon>
+            <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}" class="text-centered">
+                Welcome to the Dr. ProveIt! Academy
+            </h1>
+            <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}" class="text-centered" style="margin: auto">
+                Our courses will guide you through the various aspects of safe opioid usage and avoiding opioid
+                addiction and abuse.
+            </h3>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+            <div class="users">
+                <div class="spinner-container" *ngIf="_academyCoursesService.loading$ | async">
+                    <mat-spinner></mat-spinner>
+            </div>
+
+        <div fxLayout="column" fxLayoutAlign="center">
+            <mat-tab-group>
+                <mat-tab label="Active Lesson">
+                    <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+
+                        <div class="course" *ngFor="let course of activeCourse" fxFlex="100" fxFlex.gt-xs="50"
+                            fxFlex.gt-sm="33" [ngClass]="course.category" [@animate]="{value:'*',params:{y:'100%'}}">
+                            <div class="course-content" fxLayout="column">
+                                <div class="header active-bg" fxLayout="row" fxLayoutAlign="center center"
+                                    *ngIf="course.category!=='remedial'">
+
+                                    <div class="category" fxFlex>
+                                        {{course.category}}
+                                    </div>
+
+                                    <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                        <div class="min">{{course.grade}}</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="header remedial-bg" fxLayout="row" fxLayoutAlign="center center"
+                                    *ngIf="course.category==='remedial'">
+
+                                    <div class="category" fxFlex>
+                                        {{course.category}}
+                                    </div>
+
+                                    <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                        <div class="min">{{course.grade}}</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="content" fxLayout="column" fxLayoutAlign="center center" *ngIf="course.active" fxFlex>
+                                    <div class="h1">{{course.title}}</div>
+                                    <div class="updated">{{course.description}}</div>
+                                </div>
+                                <div class="footer" fxLayout="row" fxLayoutAlign="center center">
+                                    <button *ngIf="course.active" mat-button color="primary" (click)="saveCourse(course)"
+                                        [routerLink]="'/apps/academy/courses/' + course.media_lesson_uuid + '/' + course.questions_lesson_uuid + '/' + course.slug">
+                                        START
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+
+                <mat-tab label="Upcoming Lessons">
+                    <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+
+                        <div class="course" *ngFor="let course of toDoCourses" fxFlex="100" fxFlex.gt-xs="50"
+                            fxFlex.gt-sm="33" [ngClass]="course.category" [@animate]="{value:'*',params:{y:'100%'}}">
+
+                            <div class="course-content" fxLayout="column">
+                                <div class="header inactive-bg" fxLayout="row" fxLayoutAlign="center center"
+                                    *ngIf="!course.active">
+
+                                    <div class="category" fxFlex>
+                                        {{course.category}}
+                                    </div>
+
+                                    <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                        <div class="min">{{course.grade}}</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="content" fxLayout="column" fxLayoutAlign="center center" *ngIf="!course.active" fxFlex>
+                                    <div class="h1">{{course.title}}</div>
+                                    <div class="updated">{{course.description}}</div>
+                                </div>
+
+                                <div class="footer" fxLayout="row" fxLayoutAlign="center center">
+                                    <button *ngIf="!course.active" disabled mat-button color="accent">
+                                        START
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+
+                <mat-tab label="Completed Lessons">
+                    <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+
+                        <div class="course" *ngFor="let course of doneCourses" fxFlex="100" fxFlex.gt-xs="50"
+                            fxFlex.gt-sm="33" [ngClass]="course.category" [@animate]="{value:'*',params:{y:'100%'}}">
+
+                            <div class="course-content" fxLayout="column">
+                                <div class="header completed-bg" fxLayout="row" fxLayoutAlign="center center"
+                                    *ngIf="course.active && course.complete">
+
+                                    <div class="category" fxFlex>
+                                        {{course.category}}
+                                    </div>
+
+                                    <div class="length" fxLayout="row" fxLayoutAlign="center center">
+                                        <div class="min">{{course.grade}}</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+                                    <div class="h1">{{course.title}}</div>
+                                    <div class="updated">{{course.description}}</div>
+                                </div>
+                                <div class="footer" fxLayout="row" fxLayoutAlign="center center">
+                                    <button mat-button color="primary"
+                                        [routerLink]="'/apps/academy/courses/' + course.media_lesson_uuid + '/' + course.questions_lesson_uuid + '/' + course.slug">
+                                        START
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </mat-tab>
+            </mat-tab-group>
+
+            <!-- <div class="filters" fxLayout="column" fxLayoutAlign="center center"
+                 fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+                <mat-form-field class="course-search">
+
+                    <input matInput placeholder="Search for a course" [(ngModel)]="searchTerm"
+                           (input)="filterCoursesByTerm()">
+
+                </mat-form-field>
+
+                <mat-form-field class="category-selector">
+
+                    <mat-select placeholder="Select Category" [(ngModel)]="currentCategory"
+                                (selectionChange)="filterCoursesByCategory()">
+                        <mat-option [value]="'all'">
+                            All
+                        </mat-option>
+                        <mat-option *ngFor="let category of categories" [value]="category.value">
+                            {{ category.label }}
+                        </mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+
+            </div> -->
+
+
+            <!-- DELETE?  -->
+            <!-- <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+
+                <div class="course" *ngFor="let course of toDoCourses" fxFlex="100" fxFlex.gt-xs="50"
+                     fxFlex.gt-sm="33" [ngClass]="course.category" [@animate]="{value:'*',params:{y:'100%'}}">
+                    
+
+                        <div class="course-content" fxLayout="column">
+
+                            <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+                                <div class="h1">{{course.title}}</div>
+                                <div class="updated">{{course.description}}</div>
+                            </div>
+
+                            
+
+                        </div>
+                </div>
+            </div> -->
+
+
+            <!-- <div class="no-courses" *ngIf="filteredCourses.length === 0">
+                    No courses found!
+                </div> -->
+
+        </div>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

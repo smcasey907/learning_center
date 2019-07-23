@@ -1,0 +1,122 @@
+<div class="page-layout carded fullwidth">
+
+	<!-- TOP BACKGROUND -->
+	<div class="top-bg linear-gradient-bg"></div>
+	<!-- / TOP BACKGROUND -->
+
+	<!-- CENTER -->
+	<div class="center">
+
+		<!-- CONTENT HEADER -->
+		<!-- HEADER -->
+		<div class="header mat-cyan-700-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+			<div class="hero-text text-centered">
+				<h2 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}" class="text-centered">Admin Management</h2>
+			</div>
+
+		</div>
+		<!-- / HEADER -->
+		<!-- / CONTENT HEADER -->
+
+		<!-- CONTENT CARD -->
+		<div class="content-card mat-white-bg">
+			<!-- Search field -->
+			<!-- <mat-form-field>
+				<input matInput placeholder="Search for a user" #input>
+			</mat-form-field> -->
+
+			<!-- Loading spinner -->
+			<div class="users">
+				<div class="spinner-container" *ngIf="adminService.loading$ | async">
+					<mat-spinner></mat-spinner>
+				</div>
+
+				<!-- Table w/ sort feature -->
+				<mat-table mat-table class="mat-elevation-z8" 
+						[dataSource]="dataSource">
+
+					<ng-container matColumnDef="firstname">
+						<mat-header-cell mat-header-cell *matHeaderCellDef> First name </mat-header-cell>
+						<mat-cell mat-cell *matCellDef="let user"> {{user.firstname}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="lastname">
+						<mat-header-cell mat-header-cell *matHeaderCellDef> Last name </mat-header-cell>
+						<mat-cell mat-cell *matCellDef="let user"> {{user.lastname}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="username">
+						<mat-header-cell mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+						<mat-cell mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="trash">
+						<mat-header-cell mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+						<mat-cell mat-cell *matCellDef="let user" style="width: 10%;"><i class="material-icons" (click)="deleteUser(user.sub)">delete</i></mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="expandedDetail">
+						<mat-cell *matCellDef="let detail"> 
+							
+							<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+								<mat-spinner></mat-spinner>
+							</div>
+							<mat-grid-list cols="4" rowHeight="10rem">
+								<mat-grid-tile [colspan]="1">
+									<mat-slide-toggle
+									[(ngModel)]="adminAccess">
+										Admin Access
+									</mat-slide-toggle>
+								</mat-grid-tile>
+								<mat-grid-tile [colspan]="1">
+									<mat-slide-toggle
+										[(ngModel)]="billingAccess">
+											Billing Access
+									</mat-slide-toggle>
+								</mat-grid-tile>
+								<mat-grid-tile [colspan]="1">
+									<mat-slide-toggle
+										[(ngModel)]="activityAccess">
+											Activity Access
+									</mat-slide-toggle>
+								</mat-grid-tile>
+								<mat-grid-tile [colspan]="1">
+									<button mat-raised-button color="accent" class="btn btn-success" (click)="saveUserChanges()">Save</button>
+								</mat-grid-tile>
+							</mat-grid-list>
+							<!-- Blah...this should be hidden until clicked {{detail.user.sub}} -->
+						</mat-cell>
+					</ng-container>
+					  
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns;"
+							matRipple 
+							class="element-row" 
+							[class.expanded]="expandedElement == row"
+							(click)="expandedElement = row"
+							(click)="expandRow(row.sub)"></mat-row>
+					<mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+							[@detailExpand]="row.user == expandedElement ? 'expanded' : 'collapsed'"
+							style="overflow: hidden"> 
+					</mat-row>
+				</mat-table>
+
+				<!-- Paginator -->
+				<!-- <mat-paginator [length]="user?.lessonsCount"
+				[pageSize]="5" 
+				[pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<button class="bot-right-fab" mat-fab color="primary" (click)="addUserModal()">add</button>
+
+<!-- <mat-table mat-table class="mat-elevation-z8" 
+						[dataSource]="dataSource" 
+						multiTemplateDataRows
+						matSort
+						matSortActive="lastname"
+						matSortDirection="asc"
+						matSortDisableClear> -->

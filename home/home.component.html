@@ -1,0 +1,63 @@
+<div class="page-layout carded fullwidth">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg linear-gradient-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <!-- HEADER -->
+        <div class="header mat-cyan-700-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+            <div class="hero-text text-centered">
+                <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}" class="text-centered">
+                    Welcome to the Dr. ProveIt!'s
+                </h1>
+                <h2 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}" class="text-centered" style="margin: auto">
+                    Opioid Abuse Prevention Training
+                </h2>
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg">
+
+            <!-- CONTENT -->
+            <div class="content p-24">
+
+                <h1 class="intro-title" style="text-align: center">Introduction</h1>
+
+                <div class="video-container" [class.mat-elevation-z2]="isActive" [class.mat-elevation-z8]="!isActive" align>
+                    <div class="iframe-container iframe-16by9">
+                            <iframe class="resp-iframe" src="https://player.vimeo.com/video/240847777" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <p>Welcome to the Dr. ProveIt! Learning Center. This program is designed to teach you the fundamentals of proper and safe opioid usage and some effective alternatives. The ultimate goal is to provide you the necessary tools to safely and effectively use your prescription for the treatment of pain.</p>
+
+                <p>If you click the "Start Learning" button at the bottom of the page or the "Academy" link in the menu to the left, you will encounter your first module. Most modules have a similar format. There will be a short video lesson to teach you one aspect of opioid usage and safety followed by a series of questions. Don't worry if you get some questions wrong on the first try. You will be able to revisit the video after your first attempt and try again on the questions you missed. Once you have scored a 100% on that module, you'll be able to proceed to the next module.</p>
+
+                <p>If you are curious about the upcoming content, you can click the tab labeled "Upcoming Lessons" to see all the lessons that you have yet to take. The last tab, "Completed Lessons" is a collection of all the lessons you have already completetd. You may feel free to retake any of them as a refresher.</p>
+
+                <p>If you are interested in seeing your overall progress, click the "User Detail" link on the menu bar on the left. There you will be able to edit your personal information if you so choose, and see your history and how you have performed overall for each assessment.</p> 
+
+                <p>Whenever you're ready to begin, click the "Start Learning". Each lesson is anywhere from 5 to 10 minutes. If you leave the page before you've completed the assessment, you will have to retake the current lesson.</p>
+                <br>
+                <br>
+                <button mat-raised-button color="primary" class="start-learning-btn-size btn-center" (click)="goToAcademy()">Start Learning</button>
+                  
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
